@@ -1,108 +1,48 @@
-const API = "http://localhost:3000";
+const apps = [
+  {
+    id: 1,
+    name: "WhatsApp",
+    description: "App de mensagens",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+    download: "https://www.whatsapp.com/android/"
+  },
+  {
+    id: 2,
+    name: "Instagram",
+    description: "Rede social",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+    download: "https://www.instagram.com/"
+  },
+  {
+    id: 3,
+    name: "TikTok",
+    description: "Vídeos curtos",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg",
+    download: "https://www.tiktok.com/"
+  },
+  {
+    id: 4,
+    name: "Spotify",
+    description: "Música online",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
+    download: "https://www.spotify.com/"
+  }
+];
 
-// estrelas fake
-function getStars() {
-  const rating = (Math.random() * 2 + 3).toFixed(1);
-  return `⭐ ${rating}`;
-}
+const appList = document.getElementById("app-list");
 
-// downloads fake
-function getDownloads() {
-  const num = Math.floor(Math.random() * 900 + 100);
-  return num + " mil downloads";
-}
+apps.forEach(app => {
+  const div = document.createElement("div");
+  div.className = "app";
 
-// abrir página do app
-function openApp(id) {
-  window.location.href = "app.html?id=" + id;
-}
-
-// instalar com barra de progresso
-function installApp(link, btn) {
-  btn.innerHTML = `
-    <div class="progress-bar">
-      <div class="progress-fill"></div>
-    </div>
+  div.innerHTML = `
+    <img src="${app.icon}" width="50">
+    <h3>${app.name}</h3>
+    <p>${app.description}</p>
+    <a href="${app.download}" target="_blank">
+      <button>Instalar</button>
+    </a>
   `;
-  btn.disabled = true;
 
-  const fill = btn.querySelector(".progress-fill");
-
-  let progress = 0;
-
-  const interval = setInterval(() => {
-    progress += Math.random() * 15;
-    fill.style.width = progress + "%";
-
-    if (progress >= 100) {
-      clearInterval(interval);
-
-      // iniciar download
-      const a = document.createElement("a");
-      a.href = link;
-      a.download = "";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      btn.innerText = "Instalar";
-      btn.disabled = false;
-    }
-  }, 200);
-}
-
-// carregar apps
-function loadApps() {
-  const loading = document.getElementById("loading");
-  const container = document.getElementById("apps");
-
-  loading.style.display = "block";
-  container.innerHTML = "";
-
-  fetch(API + "/apps")
-    .then(res => res.json())
-    .then(data => {
-
-      // embaralhar apps (tipo recomendados)
-      data.sort(() => 0.5 - Math.random());
-
-      const search = document.getElementById("search").value.toLowerCase();
-
-      const filtered = data.filter(app =>
-        app.name.toLowerCase().includes(search)
-      );
-
-      loading.style.display = "none";
-
-      filtered.forEach((app, index) => {
-        const div = document.createElement("div");
-        div.className = "app";
-
-        div.innerHTML = `
-          <div onclick="openApp(${app.id})" style="display:flex; align-items:center; width:100%; cursor:pointer;">
-            <img src="${app.icon}" loading="lazy">
-            
-            <div class="app-info">
-              <h3>${app.name}</h3>
-              <p>${app.description}</p>
-              <div class="stars">${getStars()} • ${getDownloads()}</div>
-            </div>
-          </div>
-
-          <button onclick="event.stopPropagation(); installApp('${app.download}', this)">
-            Instalar
-          </button>
-        `;
-
-        container.appendChild(div);
-
-        // animação aparecer
-        setTimeout(() => {
-          div.classList.add("show");
-        }, index * 100);
-      });
-    });
-}
-
-// iniciar
-loadApps();
+  appList.appendChild(div);
+});
