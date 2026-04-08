@@ -2,46 +2,118 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Play Store</title>
-
-  <!-- RESPONSIVO -->
+  <title>Google Play</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f3f4;
+    }
 
-  <!-- COR DA BARRA NO CELULAR -->
-  <meta name="theme-color" content="#1a73e8">
+    header {
+      background: #fff;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid #ddd;
+    }
 
-  <!-- ESTILO -->
-  <link rel="stylesheet" href="style.css">
+    .container {
+      padding: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .app {
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .app img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .app h3 {
+      font-size: 14px;
+      margin: 10px 0 5px;
+    }
+
+    .app p {
+      font-size: 12px;
+      color: #555;
+    }
+
+    .app button {
+      margin-top: 10px;
+      padding: 8px;
+      background: #34a853;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- TOPO -->
-<header>
-  <h1>Google Play</h1>
-</header>
+<header>Google Play</header>
 
-<!-- BUSCA -->
-<div class="search-container">
-  <input id="search" placeholder="Pesquisar apps e jogos..." oninput="loadApps()">
-</div>
+<div class="container" id="app-list"></div>
 
-<!-- CATEGORIAS -->
-<div class="categories">
-  <span>Para você</span>
-  <span>Em alta</span>
-  <span>Categorias</span>
-</div>
+<script>
+const apps = [
+  {
+    name: "WhatsApp",
+    description: "Mensagens",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+    link: "https://www.whatsapp.com/android/"
+  },
+  {
+    name: "Instagram",
+    description: "Rede social",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png",
+    link: "https://www.instagram.com/"
+  },
+  {
+    name: "TikTok",
+    description: "Vídeos curtos",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.svg",
+    link: "https://www.tiktok.com/"
+  },
+  {
+    name: "Spotify",
+    description: "Música",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
+    link: "https://www.spotify.com/"
+  }
+];
 
-<!-- LOADING -->
-<div id="loading">Carregando...</div>
+const container = document.getElementById("app-list");
 
-<!-- LISTA DE APPS -->
-<div id="apps"></div>
+apps.forEach(app => {
+  const div = document.createElement("div");
+  div.className = "app";
 
-<script src="script.js"></script>
+  div.innerHTML = `
+    <img src="${app.icon}">
+    <h3>${app.name}</h3>
+    <p>${app.description}</p>
+    <a href="${app.link}" target="_blank">
+      <button>Instalar</button>
+    </a>
+  `;
+
+  container.appendChild(div);
+});
+</script>
 
 </body>
 </html>
