@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Play Store</title>
+
+  <!-- RESPONSIVO -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- COR DA BARRA NO CELULAR -->
+  <meta name="theme-color" content="#1a73e8">
+
+  <!-- ESTILO -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TOPO -->
+<header>
+  <h1>Google Play</h1>
+</header>
+
+<!-- BUSCA -->
+<div class="search-container">
+  <input id="search" placeholder="Pesquisar apps e jogos..." oninput="loadApps()">
+</div>
+
+<!-- CATEGORIAS -->
+<div class="categories">
+  <span>Para você</span>
+  <span>Em alta</span>
+  <span>Categorias</span>
+</div>
+
+<!-- LOADING -->
+<div id="loading">Carregando...</div>
+
+<!-- LISTA DE APPS -->
+<div id="apps"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
